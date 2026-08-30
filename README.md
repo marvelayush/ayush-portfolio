@@ -2,7 +2,7 @@
 
 > A 3D interactive developer portfolio built with Next.js 15, React Three Fiber, and Framer Motion.
 
-**[🔗 Live Site](https://your-domain.vercel.app)** · **[📄 Résumé](https://your-domain.vercel.app/resume.pdf)**
+**[🔗 Live Site](ayush-portfolio-nazn5auys-friction-s-projects.vercel.app)** · **[📄 Résumé](https://your-domain.vercel.app/resume.pdf)**
 
 ---
 
@@ -139,7 +139,7 @@ Hosted on **Vercel**.
 
 **Ayush Narayan** — B.E. Information Science & Engineering, BMSCE (Class of 2027)
 
-[GitHub](https://github.com/marvelayush) · [LinkedIn](https://linkedin.com/in/ayush-narayan-bmsce2004) · [Instagram](https://www.instagram.com/aayush._.n) · [Email](mailto:ayushnarayan.is23@bmsce.ac.in)
+[GitHub](https://github.com/marvelayush) · [LinkedIn](https://linkedin.com/in/ayush-narayan-bmsce2004) · [Instagram](https://www.instagram.com/aayush._.n) · [Email](mailto:ayushnarayan870@gmail.com)
 
 ---
 
