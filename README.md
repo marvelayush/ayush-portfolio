@@ -2,7 +2,7 @@
 
 > A 3D interactive developer portfolio built with Next.js 15, React Three Fiber, and Framer Motion.
 
-**[🔗 Live Site](ayush-portfolio-iota-five.vercel.app)** · **[📄 Résumé](https://your-domain.vercel.app/resume.pdf)**
+**[🔗 Live Site](https://ayush-portfolio-iota-five.vercel.app)** · **[📄 Résumé](https://your-domain.vercel.app/resume.pdf)**
 
 ---
 
