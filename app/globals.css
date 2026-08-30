@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0a0607;
+  --surface: #150d0f;
+  --surface-2: #1d1215;
+  --fg: #f3ecec;
+  --muted: #a08b8f;
+  --faint: #867176;
+  --border: #2c1f23;
+
+  --accent: #ff2e43;
+  --accent-fg: #0a0607;
+  --accent-dim: #7d1523;
+
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: theme("colors.border");
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display), system-ui, sans-serif;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-fg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  :target {
+    scroll-margin-top: 5rem;
+  }
+}
+
+/* --- Lenis smooth scroll (v1) --- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* The deferred WebGL layer eases in so its late mount is not a pop. */
+@keyframes canvas-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.canvas-fade-in {
+  animation: canvas-fade-in 1.2s var(--ease-smooth) both;
+}
+
+/* Single static ambient glow behind everything — no animation. */
+.ambient-glow::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 70vh;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    60% 62% at 50% 0%,
+    color-mix(in srgb, var(--accent) 18%, transparent),
+    transparent 74%
+  );
+}
+
+/* --- Hero cutout: free-standing background-removed PNG, hard edges ---
+   No mask, no vignette, no crop. A thin accent rim light hugs the silhouette
+   (two tight drop-shadows on the real alpha edge) and a directional shadow
+   grounds the figure in the scene. */
+.pcb-cutout {
+  overflow: visible; /* never clip the rim-light / ground drop-shadows */
+  filter: saturate(1.08) contrast(1.03) drop-shadow(0 0 1px #ff3b30)
+    drop-shadow(0 0 12px rgba(255, 59, 48, 0.35))
+    drop-shadow(0 20px 30px rgba(0, 0, 0, 0.6));
+}
+
+/* --- Hard-edged backdrop ring behind the cutout ---
+   Squared-off partial ring, accent red, 2px stroke, no fill. Smaller than the
+   figure so the cutout overlaps and breaks its outline. Slow linear spin. */
+.pcb-ring {
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  animation: pcb-ring-spin 72s linear infinite;
+  will-change: transform;
+}
+
+@keyframes pcb-ring-spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* --- Hero PCB traces: data pulses running edge -> photo ---
+   Only stroke-dashoffset and opacity animate; --pcb-len (path length + dash)
+   plus duration/delay are set inline per path. The pulse fades in just off
+   the screen edge and fades out as it reaches the solder pad on the photo.
+   See components/hero/PcbTraces.tsx. */
+.pcb-pulse {
+  stroke-dashoffset: var(--pcb-len, 0);
+  animation-name: pcb-pulse;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes pcb-pulse {
+  0% {
+    stroke-dashoffset: var(--pcb-len, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .pcb-ring {
+    animation: none;
+  }
+  .pcb-pulse {
+    animation: none;
+  }
+}
